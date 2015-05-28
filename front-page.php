@@ -1,104 +1,104 @@
 <?php
 
 add_filter( 'genesis_pre_get_site_option_layout', '__genesis_return_full_width_content' );
+remove_action( 'genesis_loop', 'genesis_do_loop' );
 
-add_action( 'genesis_header', 'dd_nooovle_header' );
-add_action( 'genesis_after_header', 'dd_nooovle_feature' );
-
-/**
- * Add in ScrollReveal.js in a Genesis Theme
- *
- * @package   Add in ScrollReveal.js in a Genesis Theme
- * @author    Neil Gee
- * @link      http://wpbeaches.com/using-scrollreveal-js-wordpress-genesis-theme/
- * @copyright (c)2014, Neil Gee
- **/
-
-
-
-//Enqueue the ScrollReveal main script
-function dd_scroll_reveal() {
-
- wp_enqueue_script ('scrollreveal', get_stylesheet_directory_uri() . '/js/scrollReveal.min.js', array( 'jquery' ),'2.0.5',true );
-}
-add_action( 'wp_enqueue_scripts', 'dd_scroll_reveal' );
-
-
-//Optional - Initially hide data-sr elements whilst page loads
-function dd_scroll_reveal_inlinecss() {
-?>
-<style> [data-sr] { visibility: hidden; } </style>
-<?
-
-}
-add_action( 'wp_head','dd_scroll_reveal_inlinecss' );
-
-// function dd_attr_entry_image_scrollreveal( $attributes ){
-
-//  // add scrollreveal data-sr
-//     $attributes['data-sr'] = 'enter left, move 100%, reset';
-
-//     // return the attributes
-//     return $attributes;
-
-// }
-// add_filter( 'genesis_attr_entry', 'dd_attr_entry_image_scrollreveal' );
-
-
-function dd_nooovle_header() {
-
-	echo '<div class="nooovle-header">';
-
-		genesis_widget_area( 'custom-header-left', array(
-			'before' => '<div class="custom-header-left widget-area">',
-			'after'  => '</div>'
-		));
-
-		genesis_widget_area( 'custom-header-right', array(
-			'before' => '<div class="custom-header-right widget-area">',
-			'after'  => '</div>'
-		));
-
-	echo '</div>';
-
+add_action( 'genesis_header', 'dd_nooovle_video' );
+function dd_nooovle_video() {
+	genesis_widget_area( 'nooovle_video', array(
+		'before' => '<div class="nooovle-video widget-area">',
+		'after' => '</div>'
+	));
 }
 
-function dd_nooovle_feature() {
+add_action( 'genesis_after_header', 'dd_home_featured' );
 
-		genesis_widget_area( 'brief', array(
-			'before' => '<div data-sr id="about" class="brief widget-area light"><div class="wrap">',
-			'after'  => '</div></div>'
-		));
+function dd_home_featured() {
 
-		genesis_widget_area( 'what-we-do', array(
-			'before' => '<div data-sr id="what-we-do" class="what-we-do widget-area gray"><div class="wrap">',
-			'after'  => '</div></div>'
-		));
+// About and Services
+echo '<div class="about"><div class="wrap">';
+	genesis_widget_area( 'home-featured-1', array(
+		'before' => '<div id="about" class="home-featured-1 widget-area">',
+		'after' => '</div>'
+	));
 
-		genesis_widget_area( 'watch-video', array(
-			'before' => '<div data-sr id="watch-video" class="watch-video widget-area light"><div class="wrap">',
-			'after'  => '</div></div>'
-		));
+	genesis_widget_area( 'home-featured-2', array(
+		'before' => '<div id="services" class="home-featured-2 widget-area">',
+		'after' => '</div>'
+	));
+echo '</div></div>';
 
-		genesis_widget_area( 'awesome-works', array(
-			'before' => '<div data-sr id="awesome-works" class="awesome-works widget-area gray"><div class="wrap">',
-			'after'  => '</div></div>'
-		));
+// Testimonials
+echo '<div id="testimonails" class="testimonial"><div class="wrap">';
+	genesis_widget_area( 'testimonials', array(
+		'before' => '<div class="home-testimonials widget-area">',
+		'after' => '</div>'
+	));
 
-		genesis_widget_area( 'trusted', array(
-			'before' => '<div data-sr id="trusted" class="trusted widget-area light"><div class="wrap">',
-			'after'  => '</div></div>'
-		));
+	echo '<div class="thumbnail-testimonials widget-area"><img src="'. get_stylesheet_directory_uri() .'/images/thumbnail-testimonial.jpg" width="800" height="560" /></div>';
+echo '</div></div>';
 
-		genesis_widget_area( 'ready-to-help', array(
-			'before' => '<div data-sr id="ready-to-help" class="ready-to-help widget-area">',
-			'after'  => '</div>'
-		));
+// Clients
+echo '<div id="clients" class="home-clients">';
+	// genesis_widget_area( 'clients', array(
+	// 	'before' => '<div class="home-clients widget-area"><div class="wrap">',
+	// 	'after' => '</div></div>'
+	// ));
 
-		genesis_widget_area( 'contact-us', array(
-			'before' => '<div data-sr id="contact-us" class="contact-us widget-area light">',
-			'after' => '</div>'
-		));
+		$args = array(
+			'posts_per_page' 	=> -1,
+			'post_type' 		=> 'client',
+			'orderby'			=> 'rand',
+			// 'order'				=> 'ASC',
+			'nopaging' 			=> true
+		);
+
+		// get results
+		$the_query = new WP_Query( $args );
+
+		// The Loop
+		?>
+		<?php if( $the_query->have_posts() ): ?>
+
+
+			<div class="wrap">
+				<h4 class="widget-title widgettitle">Clients</h4>
+					<ul class="client-list">
+					<?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+						<li class="client">
+							<?php genesis_image( array('size' => 'full')); ?>
+						</li>
+					<?php endwhile; ?>
+					</ul>
+			</div>
+
+		<?php endif; ?>
+
+		<?php wp_reset_query();  // Restore global post data stomped by the_post().
+echo '</div>';
+
+// Blog
+echo '<div id="blog" class="blog-items"><div class="wrap">';
+	echo '<div class="thumbnail-blog widget-area"><img src="'. get_stylesheet_directory_uri() .'/images/thumbnail-blog.jpg" width="800" height="560" /></div>';
+
+	genesis_widget_area( 'blog', array(
+		'before' => '<div class="home-blog widget-area">',
+		'after' => '</div>'
+	));
+
+echo '</div></div>';
+
+// Gallery
+// echo '<div class="portfolio">';
+	genesis_widget_area( 'portfolio', array(
+		'before' => '<div class="home-portfolio widget-area"><div class="wrap">',
+		'after' => '</div></div>'
+	));
+// echo '</div>';
+
+echo '<div class="clearfix"></div>';
+
 }
+
 
 genesis();
