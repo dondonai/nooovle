@@ -1,0 +1,46 @@
+.footer-widgets {
+	@extend %clearfix;
+	background-color: $font-color;
+	padding-top: 40px;
+	color: darken($font-color, 60%);
+	
+	input {
+		border: 1px solid darken($border-form, 50%);	
+	}
+	
+	a {
+		.button,
+		&:hover {
+			color: lighten($font-color, 100%);
+		}
+	}
+	
+	li {
+		margin-bottom: 10px;
+	}
+	
+	> .wrap {
+	}
+
+	.widget {
+		margin-bottom: 0;
+	}
+
+	.widgettitle {
+	}
+}
+
+.site-footer {
+	background-color: $bg-color;
+	font-size: 16px;
+	line-height: 1;
+	padding: 40px 0;
+	text-align: center;
+	
+	p {
+		margin-bottom: 0;
+	}
+	
+	> .wrap {
+	}
+}

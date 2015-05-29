@@ -1,0 +1,56 @@
+.site-header {
+	> .wrap {
+	}
+	& .widget-area {
+		float: right;
+		text-align: center;
+		width: 800px;
+	}
+}
+
+.title-area {
+	float: left;
+	padding: 10px 0;
+	width: 360px;
+	
+	.header-full-width & {
+		width: 100%;
+	}
+}
+
+.site-title,
+.site-description {
+	margin: 0;
+	line-height: 1;
+
+	.header-image & {
+		@extend %image-replacement;
+		display: block;
+	}
+}
+
+.site-title {
+	font-size: 32px;
+	font-weight: 400;
+
+	a {
+		color: $font-color;
+		&:hover,
+		&:focus,
+		&:active {
+			@extend a;
+		}
+	}
+}
+
+.site-description {
+	font-size: 16px;
+	font-weight: 300;
+}
+
+.header-widget-area {
+	float: right;
+
+	.widget {
+	}
+}

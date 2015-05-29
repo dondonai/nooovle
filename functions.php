@@ -3,20 +3,30 @@
 include_once( get_template_directory() . '/lib/init.php' );
 
 //* Child theme (do not remove)
-define( 'CHILD_THEME_NAME', 'Nooovle Theme' );
-define( 'CHILD_THEME_URL', 'http://www.nooovle.com/' );
-define( 'CHILD_THEME_VERSION', '2.0.0' );
+define( 'CHILD_THEME_NAME', 'Nooovle SouLution Theme' );
+define( 'CHILD_THEME_URL', 'http://.nooovle.com/' );
+define( 'CHILD_THEME_VERSION', '1.0.0' );
 
 //* Enqueue Google Fonts
 add_action( 'wp_enqueue_scripts', 'dd_google_fonts' );
 function dd_google_fonts() {
 
 	wp_enqueue_style( 'dashicons', get_stylesheet_directory_uri(), array( 'dashicons' ), '1.0' );
-	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Abel', array(), CHILD_THEME_VERSION );
+	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Raleway:400,600,700', array(), CHILD_THEME_VERSION );
+	wp_enqueue_style( 'OwlCarousel', get_stylesheet_directory_uri() . '/css/owl.carousel.css', array(), CHILD_THEME_VERSION );
+	wp_enqueue_style( 'animate-css', get_stylesheet_directory_uri() . '/css/animate.css', array(), CHILD_THEME_VERSION );
 
 	wp_enqueue_script( 'modernizr', '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js', array(), '2.8.3', false);
 	wp_enqueue_script( 'backstretch', '//cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js', array('jquery'), CHILD_THEME_VERSION, true);
+
+	wp_enqueue_script( 'onepagenav', get_stylesheet_directory_uri() . '/js/jquery.nav.min.js', array('jquery'), '3.0.0', true);
+	wp_enqueue_script( 'FitVids', get_stylesheet_directory_uri() . '/js/jquery.fitvids.min.js', array('jquery'), '1.1', true);
+	wp_enqueue_script( 'OwlCarousel', get_stylesheet_directory_uri() . '/js/owl.carousel.min.js', array('jquery'), '2.0.0', true);
+
+	// wp_enqueue_script( 'scrollReveal', get_stylesheet_directory_uri() . '/js/scrollReveal.min.js', array('jquery'), CHILD_THEME_VERSION, true);
+
 	wp_enqueue_script( 'global', get_stylesheet_directory_uri() . '/js/global.js', array('jquery'), CHILD_THEME_VERSION, true);
+	// wp_enqueue_script( 'visible-jquery', get_stylesheet_directory_uri() . '/js/jquery.visible.min.js', array('jquery'), CHILD_THEME_VERSION, true);
 
 	$dd_global = array( 'template_url' => get_stylesheet_directory_uri() );
 
@@ -37,7 +47,8 @@ add_theme_support( 'custom-background' );
 add_theme_support( 'genesis-footer-widgets', 3 );
 
 // Add image sizes
-// add_image_size( 'design thumbnail', 345, 217, true );
+add_image_size( 'home featured image', 512 );
+// add_image_size( 'home featured image', 512, 390, true );
 
 add_theme_support( 'genesis-structural-wraps', array(
 	'header',
@@ -57,7 +68,7 @@ add_theme_support( 'genesis-structural-wraps', array(
 *
 */
 
-unregister_sidebar( 'header-right' );
+// unregister_sidebar( 'header-right' );
 
 /*
 * Relocations ^_^
@@ -77,6 +88,7 @@ remove_action( 'genesis_site_description', 'genesis_seo_site_description' );
 
 add_filter( 'comment_form_defaults', 'dd_remove_comment_form_allowed_tags' );
 add_action( 'the_posts', 'dd_prime_post_thumbnails_cache', 10, 2 );
+add_filter( 'stylesheet_uri', 'child_stylesheet_uri' );
 
 remove_action( 'genesis_footer', 'genesis_do_footer' );
 add_action( 'genesis_footer', 'dd_footer' );
@@ -96,12 +108,12 @@ function dd_remove_comment_form_allowed_tags( $defaults ) {
 }
 
 function dd_footer() {
+	echo '<div class="site-title"><a href="'. get_bloginfo('url') .'"></a></div>';
+	echo '<div class="creds widget-area">'. do_shortcode('[footer_copyright]') .' &middot; Nooovle Solution &middot; All rights reserved.</div>';
 	genesis_widget_area( 'footer-social', array(
 		'before' => '<div class="footer-social widget-area">',
 		'after' => '</div>'
 	));
-
-	echo '<div class="creds widget-area">Copyright '. do_shortcode('[footer_copyright]') .' &middot; Nooovle &middot; All rights reserved.</div>';
 }
 
 function dd_prime_post_thumbnails_cache( $posts, $wp_query ) {
@@ -116,32 +128,41 @@ function dd_prime_post_thumbnails_cache( $posts, $wp_query ) {
 	return $posts;
 }
 
+
+/**
+ * Cache bust the style.css reference.
+ *
+ */
+function child_stylesheet_uri( $stylesheet_uri ) {
+    return add_query_arg( 'v', filemtime( get_stylesheet_directory() . '/style.css' ), $stylesheet_uri );
+}
+
 // Register custom post types
 add_action( 'init', 'dd_post_type' );
 function dd_post_type() {
-		register_post_type( 'client',
-			array(
-				'labels' => array(
-					'name' => __( 'Clients' ),
-					'singular_name' => __( 'Client' ),
-					'add_new_item' => 'Add New Client',
-					'add_new' => 'Add Client',
-					'edit_item' => 'Edit Client',
-					'new_item' => 'New Client',
-					'view_item' => 'View Client'
-				),
-				'public' => true,
-				'has_archive' => true,
-				'rewrite' => array('slug' => 'client'),
-				'supports' => array( 'title', 'genesis-seo', 'thumbnail', 'custom-fields' ),
-				'menu_icon' => 'dashicons-groups',
-				'menu_position' => 5,
-				'publicly_queryable' => true,
-				'hierarchical' => true,
-				// 'taxonomies' => array('service'),
-				'capability_type' => 'post'
-			)
-		);
+		// register_post_type( 'client',
+		// 	array(
+		// 		'labels' => array(
+		// 			'name' => __( 'Clients' ),
+		// 			'singular_name' => __( 'Client' ),
+		// 			'add_new_item' => 'Add New Client',
+		// 			'add_new' => 'Add Client',
+		// 			'edit_item' => 'Edit Client',
+		// 			'new_item' => 'New Client',
+		// 			'view_item' => 'View Client'
+		// 		),
+		// 		'public' => true,
+		// 		'has_archive' => true,
+		// 		'rewrite' => array('slug' => 'client'),
+		// 		'supports' => array( 'title', 'thumbnail', 'custom-fields' ),
+		// 		'menu_icon' => 'dashicons-groups',
+		// 		'menu_position' => 5,
+		// 		'publicly_queryable' => true,
+		// 		'hierarchical' => true,
+		// 		// 'taxonomies' => array('service'),
+		// 		'capability_type' => 'post'
+		// 	)
+		// );
 
 		register_post_type( 'testimonial',
 			array(
@@ -157,8 +178,32 @@ function dd_post_type() {
 				'public' => true,
 				'has_archive' => true,
 				'rewrite' => array('slug' => 'testimonial'),
-				'supports' => array( 'title','editor', 'genesis-seo', 'thumbnail', 'custom-fields' ),
+				'supports' => array( 'title','editor', 'thumbnail', 'custom-fields' ),
 				'menu_icon' => 'dashicons-admin-comments',
+				'menu_position' => 5,
+				'publicly_queryable' => true,
+				'hierarchical' => true,
+				// 'taxonomies' => array('service'),
+				'capability_type' => 'post'
+			)
+		);
+
+		register_post_type( 'screenshot',
+			array(
+				'labels' => array(
+					'name' => __( 'Screenshots' ),
+					'singular_name' => __( 'Screenshot' ),
+					'add_new_item' => 'Add New Screenshot',
+					'add_new' => 'Add Screenshot',
+					'edit_item' => 'Edit Screenshot',
+					'new_item' => 'New Screenshot',
+					'view_item' => 'View Screenshot'
+				),
+				'public' => true,
+				'has_archive' => true,
+				'rewrite' => array('slug' => 'screenshot'),
+				'supports' => array( 'title', 'thumbnail', 'custom-fields' ),
+				'menu_icon' => 'dashicons-welcome-view-site',
 				'menu_position' => 5,
 				'publicly_queryable' => true,
 				'hierarchical' => true,
@@ -168,7 +213,7 @@ function dd_post_type() {
 		);
 }
 
-add_action ('init', 'dd_custom_tax');
+// add_action ('init', 'dd_custom_tax');
 function dd_custom_tax() {
 	// Add new taxonomy, make it hierarchical (like categories)
 	$labels = array(
@@ -200,51 +245,65 @@ function dd_custom_tax() {
 
 // Registered Sidebar
 genesis_register_sidebar( array(
-	'id' => 'nooovle_video',
-	'name' => 'Nooovle Video',
-	'description' => 'Nooovle video widget'
+	'id' => 'custom-header-left',
+	'name' => 'Custom Header Left',
+	'description' => 'Custom Header left widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'home-featured-1',
-	'name' => 'Home Featured 1',
-	'description' => 'Home featured 1 widget'
+	'id' => 'custom-header-right',
+	'name' => 'Custom Header Right',
+	'description' => 'Custom header right widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'home-featured-2',
-	'name' => 'Home Featured 2',
-	'description' => 'Home featured 2 widget'
+	'id' => 'brief',
+	'name' => 'Brief Section',
+	'description' => 'Brief section widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'testimonials',
-	'name' => 'Home Testimonials',
-	'description' => 'Home testimonials widget'
+	'id' => 'how-do-we',
+	'name' => 'How Do We',
+	'description' => 'How Do We widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'clients',
-	'name' => 'Home Clients',
-	'description' => 'Home clients widget'
+	'id' => 'what-we-do',
+	'name' => 'What We Do',
+	'description' => 'What we do widget'
+));
+// genesis_register_sidebar( array(
+// 	'id' => 'watch-video',
+// 	'name' => 'Watch Video',
+// 	'description' => 'Watch video widget'
+// ));
+genesis_register_sidebar( array(
+	'id' => 'awesome-works',
+	'name' => 'Awesome Works',
+	'description' => 'Awesome works widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'blog',
-	'name' => 'Home Blog',
-	'description' => 'Home blog widget'
+	'id' => 'services',
+	'name' => 'Services',
+	'description' => 'Services widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'blog',
-	'name' => 'Home Blog',
-	'description' => 'Home blog widget'
+	'id' => 'trusted',
+	'name' => 'Trusted by Thousands',
+	'description' => 'Trusted by Thousands widget'
 ));
 genesis_register_sidebar( array(
-	'id' => 'portfolio',
-	'name' => 'Home Porfolio',
-	'description' => 'Home portfolio widget'
+	'id' => 'ready-to-help',
+	'name' => 'Ready to Help You',
+	'description' => 'Ready to Help widget'
+));
+genesis_register_sidebar( array(
+	'id' => 'contact-us',
+	'name' => 'Contact Us',
+	'description' => 'Contact us widget'
 ));
 genesis_register_sidebar( array(
 	'id' => 'footer-social',
 	'name' => 'Footer Social',
-	'description' => 'Footer social widget'
+	'description' => 'Footer Social widget'
 ));
-
 
 
 

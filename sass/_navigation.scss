@@ -1,0 +1,126 @@
+.genesis-nav-menu {
+	@extend %clearfix;
+	font-size: 16px;
+	line-height: 1;
+	position: relative;
+	width: 100%;
+
+	// Applied to all menu <li>s
+	.menu-item {
+		display: inline-block;
+		text-align: left;
+		
+		a {
+			color: $font-color;
+			position: relative;
+			display: block;
+			padding: 30px 24px;
+		}
+	}
+
+	// First level
+	> .menu-item {
+		position: relative;
+		display: inline-block;
+		text-align: left;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&.sfHover {
+			position: static;
+			
+			> .sub-menu {
+				left: auto;
+				opacity: 1;
+			}
+		}
+
+		&.current-menu-item {
+			> a {
+				color: $link-hover;
+			}
+		}
+
+		> a {
+		}
+	}
+
+	// Sublevels
+	.sub-menu {
+		position: absolute;
+		top: 100%;
+		left: -9999px;
+		z-index: 99;
+		opacity: 0;
+		transition: opacity .4s ease-in-out;
+
+		> .menu-item {
+			> a {
+				background: lighten($bg-color, 100%);
+				border: 1px solid darken($border-form, 10%);
+				font-size: 24px;
+				padding: 20px;
+				position: relative;
+				width: 200px;
+			}
+		}
+
+		.sub-menu {
+			margin: -55px 0 0 199px;
+		}
+	}
+	
+	> .first {
+		> a {
+		}
+	}
+	
+	> .last {
+		> a {
+		}
+	}
+	
+	> .right {
+		color: $font-color;
+		float: right;
+		list-style-type: none;
+		padding: 30px 0;
+		
+		> a {
+			display: inline;
+			padding: 0;
+		}
+	}
+	
+	> rss {
+		> a {
+		}
+	}
+	
+	> .search {
+		padding: 10px 0 0;
+	}
+}
+
+.nav-primary {
+	background-color: $font-color;
+	
+	& .genesis-nav-menu a {
+		color: lighten( $font-color, 100% );
+	}
+	
+	& .genesis-nav-menu .sub-menu a {
+		color: $font-color;
+	}
+	
+	& .genesis-nav-menu a:hover,
+	& .genesis-nav-menu .current-menu-item > a,
+	& .genesis-nav-menu .sub-menu .current-menu-item > a:hover {
+		color: $link-color;
+	}
+}
+
+.nav-secondary {
+	background-color: lighten($bg-color, 100%);
+}

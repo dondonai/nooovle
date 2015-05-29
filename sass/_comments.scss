@@ -1,0 +1,96 @@
+.comment-respond,
+.entry-comments,
+.entry-pings {
+	background-color: lighten($bg-color, 100%);
+	margin-bottom: 40px;
+}
+
+.comment-respond,
+.entry-pings {
+	padding: 40px 40px 16px;
+}
+
+.entry-comments {
+	padding: 40px;
+	
+	.comment-author {
+		margin-bottom: 0;
+	}
+}
+
+.comment-list {
+	.comment {
+		> article {
+		}
+	}
+
+	.children {
+	}
+}
+
+.comment-header {
+	@extend %clearfix;
+	font-size: 16px;
+
+	.comment-author {
+	}
+
+	img {
+	}
+}
+
+.comment-content {
+	@extend .entry-content;
+	@extend %clearfix;
+}
+
+.comment-list {
+	li {
+		margin-top: 24px;
+		padding: 32px;
+		
+		li {
+			margin-right: -32px;
+		}
+	}
+}
+
+.comment-respond {
+	.form-submit {
+		@extend %clearfix;
+	}
+	
+	input[type="email"],
+	input[type="text"],
+	input[type="url"] {
+		width: 50%;
+	}
+	
+	label {
+		display: block;
+		margin-right: 12px;
+	}
+}
+
+.entry-pings {
+	.reply {
+		display: none;
+	}
+}
+
+.comment-notes,
+.logged-in-as,
+.form-allowed-tags {
+	@extend %type;
+}
+
+.comment-notes,
+.logged-in-as,
+.form-allowed-tags,
+.comment-form-author,
+.comment-form-email,
+.comment-form-url {
+}
+
+.comment-form-comment {
+}

@@ -1,0 +1,98 @@
+html,
+body {
+	// min-width: $siteWidth; // Prevents backgrounds on these elements from being truncated on smaller screens on fixed-width sites
+}
+
+body {
+	// text-rendering: optimizeLegibility; // May break certain @font-face fonts. Use `text-rendering: auto;` to selectively undo.
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	-moz-font-feature-settings: 'liga' on;
+	background-color: bg-color;
+	color: $font-color;
+	font-family: $body-font;
+	font-size: $body-font-size;
+	font-weight: 300;
+	line-height: 1.625;
+	margin: 0;
+}
+
+a,
+button,
+input:focus,
+input[type='button'],
+input[type='reset'],
+input[type='submit'],
+textarea:focus,
+.button {
+	transition: all .1s ease-in-out;
+}
+
+::selection {
+	// text-shadow: none;
+	background-color: #008ed6;
+	color: #fff;
+}
+
+a {
+	color: $link-color;
+	&:hover,
+	&:focus,
+	&:active {
+		color: $link-hover;
+	}
+}
+
+ol,
+ul {
+	@extend %unstyled-list;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+strong {
+	font-weight: 700;
+}
+
+abbr {
+	letter-spacing: .1em;
+}
+
+pre {
+	overflow: scroll;
+	white-space: pre;
+}
+
+code {
+	overflow: hidden;
+	word-break: break-word;
+}
+
+iframe {
+	border: none;
+}
+
+blockquote,
+cite,
+em,
+i {
+	font-style: italic;
+}
+
+blockquote {
+	margin: 40px;
+}
+
+blockquote::before {
+	content: "\201C";
+	display: block;
+	font-size: 30px;
+	height: 0;
+	left: -20px;
+	position: relative;
+	top: -10px;
+}

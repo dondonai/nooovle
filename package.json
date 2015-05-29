@@ -1,0 +1,28 @@
+{
+  "name": "nooovle",
+  "version": "1.0.0",
+  "description": "Start up child theme for Genesis Framework",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dondonai/nooovle.git"
+  },
+  "author": "dOndOnAi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dondonai/nooovle/issues"
+  },
+  "homepage": "https://github.com/dondonai/nooovle",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-clean": "^0.3.1",
+    "gulp-compass": "^2.1.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-minify-css": "^1.1.1",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0"
+  },
+  "dependencies": {
+    "path": "^0.11.14"
+  }
+}

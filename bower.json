@@ -1,0 +1,19 @@
+{
+  "name": "nooovle",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dondonai/nooovle",
+  "authors": [
+    "Adones Reballos <stylus_collosus@yahoo.com.ph>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-scss": "~3.0.3"
+  }
+}

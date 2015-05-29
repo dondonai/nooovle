@@ -1,0 +1,153 @@
+.breadcrumb {
+	margin-bottom: 20px;
+}
+
+.entry-title {
+	font-size: 36px;
+	overflow: hidden;
+	word-break: break-word;
+
+	a {
+		color: $font-color;
+
+		&:hover,
+		&:focus,
+		&:active {
+			color: $link-hover;
+		}
+	}
+}
+
+.archive-title {
+	font-size: 20px;
+}
+
+.entry {
+	margin-bottom: 40px;
+	padding: 50px 60px;
+	
+	.content & {
+		background-color: lighten( $bg-color, 100% );
+	}
+}
+
+.entry-content {
+	p {
+		@extend %type;
+	}
+
+	ol,
+	ul {
+		@extend %type;
+		padding-left: 2.5em;
+
+		ol,
+		ul {
+			margin-bottom: .5em;
+			padding-left: 1.5em;
+		}
+	}
+
+	ol {
+		> li {
+			list-style-type: decimal;
+		}
+	}
+
+	ul {
+		li {
+			list-style-type: disc;
+		}
+	}
+
+	blockquote {
+		margin: 0;
+
+		p {
+		}
+	}
+
+	table {
+		margin-bottom: 1.5em;
+	}
+}
+
+.entry-pagination {
+}
+
+.entry-meta {
+	clear: both;
+	font-size: 16px;
+	margin-bottom: 0;
+
+	.entry-header & {
+		margin-bottom: 24px;
+	}
+
+	.entry-footer & {
+		border-top: 2px solid &bg-color;
+		padding-top: 24px;
+	}
+
+	.entry-categories,
+	.entry-tags {
+		display: block;
+	}
+}
+
+.entry-comments-link::before {
+	content: "\2014";
+	margin: 0 6px 0 2px;
+}
+
+.pagination {
+	clear: both;
+	margin: 40px 0;
+}
+
+.adjacent-entry-pagination {
+	margin-bottom: 0;
+}
+
+.archive-pagination {
+	clear: both;
+
+	a {
+	}
+
+	li {
+		display: inline;
+
+		a {
+			background-color: $font-color;
+			color: lighten($font-color, 100%);
+			cursor: pointer;
+			display: inline-block;
+			font-size: 16px;
+			padding: 8px 12px;
+			
+			&:hover,
+			&:focus,
+			&:active {
+				background-color: $link-color;
+			}
+		}
+
+		&.pagination-omission {
+		}
+
+		&.active {
+			a {
+			}
+		}
+	}
+}
+
+.widget-title {
+	font-size: 18px;
+	margin-bottom: 20px;
+	
+	.footer-widgets & {
+		color: #fff;
+	}
+}
